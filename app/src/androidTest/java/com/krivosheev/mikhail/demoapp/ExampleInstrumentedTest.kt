@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -42,7 +43,7 @@ class ExampleInstrumentedTest {
 
         onView(withId(R.id.textViewHello)).check(matches(withText(testingText)))
 
-        onView(withId(R.id.textViewHello)).perform(setTextInTextView("NEW TEXT"))
+        onView(withId(R.id.btnClick)).perform(click())
         onView(withId(R.id.textViewHello)).check(matches(withText("NEW TEXT")))
 
         with(activityRule.activity) {
@@ -54,26 +55,6 @@ class ExampleInstrumentedTest {
             }
         }
 
-        onView(withId(R.id.textViewHello)).check(matches(withText(testingText)))
+       onView(withId(R.id.textViewHello)).check(matches(withText(testingText)))
     }
-
-    companion object {
-
-        fun setTextInTextView(value: String): ViewAction {
-            return object : ViewAction {
-                override fun getDescription(): String {
-                    return "SETTING NEW VALUE"
-                }
-
-                override fun getConstraints(): Matcher<View> {
-                    return allOf(isDisplayed(), isAssignableFrom(TextView::class.java))
-                }
-
-                override fun perform(uiController: UiController?, view: View?) {
-                    (view as TextView).text = value
-                }
-            }
-        }
-    }
-
 }
